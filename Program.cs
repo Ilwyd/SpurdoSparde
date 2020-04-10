@@ -61,7 +61,7 @@ namespace Spurdoo
 
             //If I'm live the JSON will have "type":"live" in it
             if(content.Contains("\"type\":\"live\"")) {
-                await client.SetGameAsync("!spurdo | !acquiresparde", "https://twitch.tv/CustardGod", StreamType.Twitch);
+                await client.SetGameAsync("!spurdo | !acquiresparde", "https://twitch.tv/CustardGod", ActivityType.Streaming);
             }
             else {
                 await client.SetGameAsync("!spurdo | !acquiresparde");
@@ -73,7 +73,7 @@ namespace Spurdoo
             // Hook the MessageReceived Event into our Command Handler
             client.MessageReceived += HandleCommand;
             // Discover all of the commands in this assembly and load them.
-            await commands.AddModulesAsync(Assembly.GetEntryAssembly());
+            await commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
         }
 
         public async Task HandleCommand(SocketMessage messageParam)

@@ -12,7 +12,7 @@ using DiscordBotsList.Api.Objects;
 using HtmlAgilityPack;
 
 namespace Spurdoo {
-    [Ratelimit(1, 0.167, Measure.Minutes, false, false, true)]
+    [Ratelimit(1, 0.167, Measure.Minutes, RatelimitFlags.NoLimitForAdmins)]
     public class CommandModule : ModuleBase {
 
         static TimeSpan time = TimeSpan.FromSeconds(10);
@@ -94,16 +94,15 @@ namespace Spurdoo {
                 description += innerList.ElementAt(4) + "\n";
             }
             
-            embed.AddInlineField("Item", name);
-            embed.AddInlineField("Cost (Quantity)", cost);
+            embed.AddField("Item", name, true);
+            embed.AddField("Cost (Quantity)", cost, true);
             //embed.AddInlineField("Quantity", quantity);
             //embed.AddInlineField("Descriptions", description);
             embed.Author = embedAuthor;
             embed.Color = Color.Blue;
             embed.Footer = embedFooter;
-            embed.Build();
 
-            await ReplyAsync("", false, embed);
+            await ReplyAsync("", false, embed.Build());
         }
     }
 
@@ -153,12 +152,12 @@ namespace Spurdoo {
             embed.Author = embedAuthor;
             embed.Title = "Info";
             embed.Description = description;
-            embed.AddInlineField("Total Guilds", guildCount);
-            embed.AddInlineField("Total Users", userCount);
-            embed.AddInlineField("DBL Points", votes);
-            embed.AddInlineField("Library", library);
-            embed.AddInlineField("Prefix", prefix);
-            embed.AddField("Commands used since Dec-18-2018", commandCounts);
+            embed.AddField("Total Guilds", guildCount, true);
+            embed.AddField("Total Users", userCount, true);
+            embed.AddField("DBL Points", votes, true);
+            embed.AddField("Library", library, true);
+            embed.AddField("Prefix", prefix, true);
+            embed.AddField("Commands used since Dec-18-2018", commandCounts, true);
 
             var totalTime = (DateTime.Now - start).TotalSeconds.ToString();
             
@@ -168,10 +167,9 @@ namespace Spurdoo {
 
             //Adding the footer to the embed
             embed.Footer = embedFooter;
-            embed.Build();
 
             //Sending the response
-            await ReplyAsync("", false, embed);
+            await ReplyAsync("", false, embed.Build());
         }
 
         //Addimg command
